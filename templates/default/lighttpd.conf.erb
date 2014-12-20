@@ -1,0 +1,56 @@
+server.modules = (
+	"mod_access",
+	"mod_alias",
+	"mod_compress",
+ 	"mod_redirect",
+#       "mod_rewrite",
+)
+
+server.name                 = "<%= node['fqdn'] %>"
+server.document-root        = "/var/www"
+server.upload-dirs          = ( "/var/cache/lighttpd/uploads" )
+server.errorlog             = "/var/log/lighttpd/error.log"
+server.pid-file             = "/var/run/lighttpd.pid"
+server.username             = "www-data"
+server.groupname            = "www-data"
+server.port                 = node[:lighttpd][:port]
+server.tag                  = "lighttpd"
+
+index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )
+url.access-deny             = ( "~", ".inc" )
+static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+
+compress.cache-dir          = "/var/cache/lighttpd/compress/"
+compress.filetype           = ( "application/javascript", "text/css", "text/html", "text/plain" )
+
+# default listening port for IPv6 falls back to the IPv4 port
+## Use ipv6 if available
+#include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+include_shell "/usr/share/lighttpd/create-mime.assign.pl"
+include_shell "/usr/share/lighttpd/include-conf-enabled.pl"
+
+ssl.engine  = "enable"
+ssl.pemfile = "/etc/lighttpd/ssl/server.pem"
+ssl.use-sslv2 = "disable"
+ssl.use-sslv3 = "disable"
+ssl.use-compression = "disable"
+ssl.honor-cipher-order = "enable"
+ssl.cipher-list = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4"
+
+$HTTP["host"] != "<%= node['fqdn'] %>" {
+	$HTTP["url"] =~ "^/rutorrent/" {
+		url.access-deny = ( "" )
+	}
+}
+
+auth.backend = "htdigest"
+auth.backend.htdigest.userfile = "/etc/lighttpd/.passwd"
+auth.debug = 2
+
+auth.require = ( "/rutorrent" =>
+(
+	"method" => "digest",
+	"realm" => "Authorized users only",
+	"require" => "valid-user"
+)
+)
