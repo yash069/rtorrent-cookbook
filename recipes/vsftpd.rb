@@ -17,7 +17,7 @@ end
 
 ruby_block "set_attribute" do
   block do
-    node["public_ip"] = `head -1 /tmp/myip`
+    node.normal['public_ip'] = `head -1 /tmp/myip`
   end
   action :create
 end

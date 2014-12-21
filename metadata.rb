@@ -1,6 +1,6 @@
 name             'rtorrent'
-maintainer       'YOUR_COMPANY_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'SBD'
+maintainer_email 'yash069@live.com'
 license          'All rights reserved'
 description      'Installs/Configures rtorrent'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))

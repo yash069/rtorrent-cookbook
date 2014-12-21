@@ -13,33 +13,33 @@ include_recipe "rtorrent::lighttpd"
 include_recipe "rtorrent::rutorrent"
 include_recipe "rtorrent::vsftpd"
 
-cookbook_file "/tmp/#{node[:rtorrent][:libtorrent][:debfile]}" do
-	source "#{node[:rtorrent][:libtorrent][:debfile]}"
+cookbook_file "/tmp/#{node['rtorrent']['libtorrent']['debfile']}" do
+	source node['rtorrent']['libtorrent']['debfile']
 	mode '0644'
 end
 
 dpkg_package "libtorrent" do
-	source "/tmp/#{node[:rtorrent][:libtorrent][:debfile]}"
+	source "/tmp/#{node['rtorrent']['libtorrent']['debfile']}"
 	action :install
 end
 
-cookbook_file "/tmp/#{node[:rtorrent][:debfile]}" do                    
-        source "#{node[:rtorrent][:debfile]}"                 
+cookbook_file "/tmp/#{node['rtorrent']['debfile']}" do
+        source node['rtorrent']['debfile']
         mode '0644'
 end
 
 dpkg_package "rtorrent" do
-        source "/tmp/#{node[:rtorrent][:debfile]}"
+        source "/tmp/#{node['rtorrent']['debfile']}"
         action :install
 end
 
-cookbook_file "/tmp/#{node[:rtorrent][:xmlrpc][:debfile]}" do                    
-        source "#{node[:rtorrent][:xmlrpc][:debfile]}"                 
+cookbook_file "/tmp/#{node['rtorrent']['xmlrpc']['debfile']}" do                    
+        source node['rtorrent']['xmlrpc']['debfile']          
         mode '0644'
 end
 
 dpkg_package "xmlrpc-c" do
-        source "/tmp/#{node[:rtorrent][:xmlrpc][:debfile]}"
+        source "/tmp/#{node['rtorrent']['xmlrpc']['debfile']}"
         action :install
 end
 
