@@ -1,6 +1,5 @@
 define :lighttpd_module, :enable => true do
 	module_command = (params[:enable]) ? "lighttpd-enable-mod" : "lighttpd-disable-mod"
-	include_recipe "lighttpd"
 	bash "run_lighty_mod" do
 		user "root"
 		code <<-EOH

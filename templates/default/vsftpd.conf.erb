@@ -1,0 +1,23 @@
+listen=YES
+listen_ipv6=NO
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+xferlog_file=/var/log/vsftpd.log
+connect_from_port_20=YES
+idle_session_timeout=300
+ftpd_banner=Seedbox.Desi FTP service.
+chroot_local_user=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=ftp
+rsa_private_key_file=/etc/lightttpd/ssl/server.pem
+
+hide_file={.*}
+allow_writeable_chroot=YES
+pasv_enable=YES
+pasv_address=<%= node[:rtorrent][:public_ip] %>
+pasv_max_port=27600
+pasv_min_port=27200

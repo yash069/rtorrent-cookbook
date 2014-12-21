@@ -30,7 +30,15 @@ directory "/etc/lighttpd/ssl"
 end
 
 bash "genrate_certi" do
+	user 'root'
+	cmd '/etc/lighttpd/ssl'
+	code <<-EOH
+	openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=IN/ST=Maharastra/L=Pune/O=SeedboxDesi/CN=#{node['fqdn']}" -keyout server.pem -out server.pem
+	EOH
+end
 
+file "/etc/lighttpd/ssl/server.pem"
+	mode '0600'
 end
 
 template "/etc/lighttpd/lighttpd.conf" do
