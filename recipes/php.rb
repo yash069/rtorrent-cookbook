@@ -1,4 +1,4 @@
-node[:php][:packages].each |package_name| do
+node[:php][:packages].each do |package_name|
 	apt_package package_name do
 		action :install
 	end
@@ -10,10 +10,10 @@ service "php5-fpm" do
 	action [ :enable, :start ]
 end
 
-cookbook_file "/etc/php5/fpm/php.ini"
+cookbook_file "/etc/php5/fpm/php.ini" do
 	source "php.ini"
 	owner 'root'
 	group 'root'
 	mode '0644'
-	notifies :reload, "servuce[php-fpm]", :immediately
+	notifies :reload, "service[php5-fpm]", :immediately
 end

@@ -3,9 +3,9 @@ apt_package "lighttpd" do
 end
 
 service "lighttpd" do
-	provider Chef::Provider::Service::Upstart
+#	provider Chef::Provider::Service::Upstart
 	supports :status => true, :restart => true, :reload => true
-	action [ :enable, :start ]
+	action [ :enable ]
 end
 
 cookbook_file "/var/www/index.html" do
@@ -22,7 +22,7 @@ cookbook_file "/etc/lighttpd/conf-available/15-fastcgi-php.conf" do
 	mode '0644'
 end
 
-directory "/etc/lighttpd/ssl"
+directory "/etc/lighttpd/ssl" do
 	action :create
 	owner 'root'
 	group 'root'
@@ -31,13 +31,13 @@ end
 
 bash "genrate_certi" do
 	user 'root'
-	cmd '/etc/lighttpd/ssl'
+	cwd '/etc/lighttpd/ssl'
 	code <<-EOH
 	openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=IN/ST=Maharastra/L=Pune/O=SeedboxDesi/CN=#{node['fqdn']}" -keyout server.pem -out server.pem
 	EOH
 end
 
-file "/etc/lighttpd/ssl/server.pem"
+file "/etc/lighttpd/ssl/server.pem" do
 	mode '0600'
 end
 

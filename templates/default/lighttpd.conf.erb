@@ -13,7 +13,7 @@ server.errorlog             = "/var/log/lighttpd/error.log"
 server.pid-file             = "/var/run/lighttpd.pid"
 server.username             = "www-data"
 server.groupname            = "www-data"
-server.port                 = node[:lighttpd][:port]
+server.port                 = <%= node['lighttpd']['port'] %>
 server.tag                  = "lighttpd"
 
 index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )

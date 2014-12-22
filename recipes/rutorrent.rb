@@ -40,8 +40,8 @@ bash "rutorrent data" do
 	EOH
 end
 
-cookbook_file "/var/www/rutorrent/plugins/filemanger/conf.php"
-	source filemanager.conf.php
+cookbook_file "/var/www/rutorrent/plugins/filemanager/conf.php" do
+	source "filemanager.conf.php"
 	user 'www-data'
 	group 'www-data'
 	mode '0755'

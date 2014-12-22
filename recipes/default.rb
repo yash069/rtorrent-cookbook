@@ -8,8 +8,8 @@
 #
 
 include_recipe "rtorrent::apt"
-include_recipe "rtorrent::php"
 include_recipe "rtorrent::lighttpd"
+include_recipe "rtorrent::php"
 include_recipe "rtorrent::rutorrent"
 include_recipe "rtorrent::vsftpd"
 

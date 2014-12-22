@@ -1,8 +1,8 @@
 # lighttpd
-
+default['lighttpd']['port'] = 443
 
 # php
-default['lighttpd']['packages'] = %w[ php5 php5-cli php5-fpm ]
+default['php']['packages'] = %w[ php5 php5-cli php5-fpm ]
 
 # rTorrent
 default['rtorrent']['debfile'] = "rtorrent_0.9.2-1_amd64.deb"
