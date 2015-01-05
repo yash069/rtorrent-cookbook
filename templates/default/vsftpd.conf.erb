@@ -18,6 +18,6 @@ rsa_private_key_file=/etc/lightttpd/ssl/server.pem
 hide_file={.*}
 allow_writeable_chroot=YES
 pasv_enable=YES
-pasv_address=<%= node['rtorrent']['public_ip'] %>
+pasv_address=<%= node['gce']['instance']['networkInterfaces'][0]['accessConfigs'][0]['externalIp'] %>
 pasv_max_port=27600
 pasv_min_port=27200
